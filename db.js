@@ -33,8 +33,6 @@ module.exports = {
                     }
                 });
             });
-            
-
         },
         getAllContactsId: function(userId){
             return new Promise(function(resolve, reject){
@@ -77,27 +75,29 @@ module.exports = {
                 });
             });
         },
-        getUser: function(email){
-            MongoClient.connect(url, function(err, db) {
-                if (err) throw err;
-                var dbo = db.db("Assignment1");
-                dbo.collection("Users").find({_id: email}).toArray(function(err, result) {
-                    if (err) throw err;
-                    console.log(result);
-                    db.close();
-                    return result;
+        getUser: function(nickname){
+            return new Promise(function(resolve, reject){
+                db.collection("Users").find({nickname}).toArray(function(err, res) {
+                    if (err){
+                        reject(err);
+                    }
+                    else{
+                        console.log("Success");
+                        resolve(res);
+                    }
                 });
             });
         },
-        createUser(user) {
-            MongoClient.connect(url, function(err, db) {
-                if (err) throw err;
-                var dbo = db.db("Assignment1");
-                const newUser = extend({_id: user.email, password: user.password});
-                dbo.collection("Users").insertOne(newUser, function(err, res) {
-                    if (err) throw err;
-                    console.log("1 document inserted");
-                    db.close();
+        createUser: function(user){
+            return new Promise(function(resolve, reject){
+                db.collection("Users").insertOne(user, function(err, res) {
+                    if (err){
+                        reject(err);
+                    }
+                    else{
+                        console.log("Success");
+                        resolve(user);
+                    }
                 });
             });
         }
