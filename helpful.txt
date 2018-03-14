@@ -1,0 +1,6 @@
+https://community.c9.io/t/setting-up-mongodb/1717
+https://www.tutorialspoint.com/nodejs_online_training/nodejs_express_generator.asp
+
+https://www.npmjs.com/package/express-generator-mvc
+
+https://bitbucket.org/snippets/lalitaly/zekgX9/egci427-nodejs-mongo-2018
