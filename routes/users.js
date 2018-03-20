@@ -10,8 +10,13 @@ router.post('/', function(req, res, next) {
       }).catch(next);
 });
 router.get('/:nickname', function(req, res, next) {
-     db.getUser(req.params.nickname).then(function(user){
-      res.json(user);
-      }).catch(next);
+    db.getUser(req.params.nickname).then(function(user){
+        res.json(user);
+    }).catch(next);
+});
+router.get('/nickname/:nickname', function(req, res, next){
+    db.checkNickname(req.params.nickname).then(function(nickname){
+        res.json(nickname);
+    }).catch(next);
 });
 module.exports = router;

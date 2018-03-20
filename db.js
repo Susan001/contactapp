@@ -1,9 +1,9 @@
 const extend = require('util')._extend;
-let contact_counter= 0;
 let db;
 
 const MongoClient = require('mongodb').MongoClient;
-const url = "mongodb://localhost:27017/assignment1";
+const ObjectID = require("mongodb").ObjectID;
+const url = "mongodb://localhost:27017/test";
 
 
 module.exports = {
@@ -13,12 +13,26 @@ module.exports = {
                     if (err) {
                         reject(err);
                     } else {
-                        db = client.db('assignment');
+                        db = client.db('test');
                         resolve();
                     }
                 });
 
             })
+        },
+        //to delete
+        check: function(){
+            return new Promise(function(resolve, reject){
+                db.collection("Contacts").find().toArray(function(err, res) {
+                    if (err){
+                        reject(err);
+                    }
+                    else{
+                        console.log("Success");
+                        resolve(res);
+                    }
+                });
+            });
         },
         insertOneContact:  function (contact){
             return new Promise(function(resolve, reject){
@@ -34,9 +48,9 @@ module.exports = {
                 });
             });
         },
-        getAllContactsId: function(userId){
+        getAllContactsNickname: function(userNickname){
             return new Promise(function(resolve, reject){
-                db.collection("Contacts").find({userId}).toArray(function(err, res) {
+                db.collection("Contacts").find({userNickname}).toArray(function(err, res) {
                     if (err){
                         reject(err);
                     }
@@ -48,9 +62,10 @@ module.exports = {
             });
             
         },
-        deleteContact: function (contactId){
+        deleteContact: function (id){
             return new Promise(function(resolve, reject){
-                db.collection("Contacts").deleteOne({contactId}, function(err, res) {
+                console.log("versuch 2 "+ id);
+                db.collection("Contacts").deleteOne({"_id": ObjectID(id)}, function(err, res) {
                     if (err){
                         reject(err);
                     }
@@ -61,16 +76,30 @@ module.exports = {
                 });
             });
         },
-        updateContact: function (contactId, newData){
+        updateContact: function (id, newData){
             return new Promise(function(resolve, reject){
-                var newvalues = { $set: newData };
-                db.collection("Contacts").updateOne({contactId}, newvalues, function(err, res) {
+                var newValues = { $set: newData };
+                console.log(newValues);
+                db.collection("Contacts").updateOne({"_id": ObjectID(id)}, newValues, function(err, res) {
                     if (err){
                         reject(err);
                     }
                     else{
                         console.log("Success");
                         resolve(newData);
+                    }
+                });
+            });
+        },
+        checkNickname: function(nickname){
+            return new Promise(function(resolve, reject){
+                db.collection("Users").find({nickname}, {nickname: 1}).toArray(function(err, res) {
+                    if (err){
+                        reject(err);
+                    }
+                    else{
+                        console.log("Success");
+                        resolve(res);
                     }
                 });
             });
@@ -101,4 +130,4 @@ module.exports = {
                 });
             });
         }
-    }
+    };

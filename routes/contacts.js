@@ -4,13 +4,18 @@ const db = require('../db');
 
 /* GET users listing. */
 
-router.get('/:userid', function(req, res, next) {
-    db.getAllContactsId(parseInt(req.params.userid,10)).then(function(contacts){
+router.get('/:usernickname', function(req, res, next) {
+    db.getAllContactsNickname(req.params.usernickname).then(function(contacts){
+      res.json(contacts);
+      }).catch(next);
+});
+router.get('/', function(req, res, next) {
+    db.check().then(function(contacts){
       res.json(contacts);
       }).catch(next);
 });
 router.put('/:id', function(req, res, next) {
-    db.updateContact(parseInt(req.params.id,10), req.body).then(function(newData){
+    db.updateContact(req.params.id, req.body).then(function(newData){
       res.json(newData);
       }).catch(next);
 });
@@ -23,7 +28,8 @@ router.post('/', function(req, res, next){
 });
 
 router.delete('/:id', function(req, res, next){
-    db.deleteContact(parseInt(req.params.id,10)).then(function(item){
+  console.log(req.params.id);
+    db.deleteContact(req.params.id).then(function(item){
       res.json({deleted:item});
       }).catch(next);
 });

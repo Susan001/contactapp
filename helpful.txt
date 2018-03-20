@@ -4,3 +4,24 @@ https://www.tutorialspoint.com/nodejs_online_training/nodejs_express_generator.a
 https://www.npmjs.com/package/express-generator-mvc
 
 https://bitbucket.org/snippets/lalitaly/zekgX9/egci427-nodejs-mongo-2018
+
+
+
+Repair mongodb :
+mongod --repair --dbpath ./data
+./mongod
+
+
+Start vue :
+cd vue-frontend
+npm run dev
+
+Port Backend ändern:
+echo &PORT 
+export PORT=8081
+
+
+Mongodb:
+mongo
+use databasename
+db.dropDatabase();
