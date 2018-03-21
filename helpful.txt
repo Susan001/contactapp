@@ -17,7 +17,7 @@ cd vue-frontend
 npm run dev
 
 Port Backend ändern:
-echo &PORT 
+echo $PORT 
 export PORT=8081
 
 

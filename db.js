@@ -62,6 +62,20 @@ module.exports = {
             });
             
         },
+        getContact: function(id){
+            return new Promise(function(resolve, reject){
+                console.log(id);
+                db.collection("Contacts").find({"_id": ObjectID(id)}).toArray(function(err, res) {
+                    if (err){
+                        reject(err);
+                    }
+                    else{
+                        console.log("Success");
+                        resolve(res);
+                    }
+                });
+            });
+        },
         deleteContact: function (id){
             return new Promise(function(resolve, reject){
                 console.log("versuch 2 "+ id);

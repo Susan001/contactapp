@@ -14,16 +14,24 @@ router.get('/', function(req, res, next) {
       res.json(contacts);
       }).catch(next);
 });
-router.put('/:id', function(req, res, next) {
-    db.updateContact(req.params.id, req.body).then(function(newData){
-      res.json(newData);
-      }).catch(next);
-});
 
 router.post('/', function(req, res, next){
     console.log(req.body);
     db.insertOneContact(req.body).then(function(id){
       res.json(id);
+      }).catch(next);
+});
+
+router.get('/contact/:id', function(req, res, next){
+    console.log(req.params.id);
+    db.getContact(req.params.id).then(function(item){
+      res.json(item);
+      }).catch(next);
+});
+
+router.put('/:id', function(req, res, next) {
+    db.updateContact(req.params.id, req.body).then(function(newData){
+      res.json(newData);
       }).catch(next);
 });
 
@@ -33,4 +41,7 @@ router.delete('/:id', function(req, res, next){
       res.json({deleted:item});
       }).catch(next);
 });
+
+
+
 module.exports = router;
