@@ -3,7 +3,7 @@ let db;
 
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require("mongodb").ObjectID;
-const url = "mongodb://localhost:27017/test";
+const url = "mongodb://localhost:27017/contactapp";
 
 
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
                     if (err) {
                         reject(err);
                     } else {
-                        db = client.db('test');
+                        db = client.db('contactapp');
                         resolve();
                     }
                 });
@@ -131,6 +131,23 @@ module.exports = {
                 });
             });
         },
+        /**
+        checkCredentials: function(nickname, password){
+            const user = new Promise(function(resolve, reject){
+                db.collection("Users").find({nickname}).toArray(function(err, res) {
+                    if (err){
+                        reject(err);
+                    }
+                    else{
+                        console.log("Success");
+                        resolve(res);
+                    }
+                });
+            });
+            user.then(function(user){
+                res.json(user);
+            }).catch(next);
+        },*/
         createUser: function(user){
             return new Promise(function(resolve, reject){
                 db.collection("Users").insertOne(user, function(err, res) {
