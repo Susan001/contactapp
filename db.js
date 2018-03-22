@@ -1,4 +1,3 @@
-const extend = require('util')._extend;
 let db;
 
 const MongoClient = require('mongodb').MongoClient;
@@ -20,29 +19,13 @@ module.exports = {
 
             })
         },
-        //to delete
-        check: function(){
-            return new Promise(function(resolve, reject){
-                db.collection("Contacts").find().toArray(function(err, res) {
-                    if (err){
-                        reject(err);
-                    }
-                    else{
-                        console.log("Success");
-                        resolve(res);
-                    }
-                });
-            });
-        },
         insertOneContact:  function (contact){
             return new Promise(function(resolve, reject){
-                //const newContact = extend({contactId: "hu"} contact);
                 db.collection("Contacts").insertOne(contact, function(err, res) {
                     if (err){
                         reject(err);
                     }
                     else{
-                        console.log("Success");
                         resolve(contact);
                     }
                 });
@@ -55,7 +38,6 @@ module.exports = {
                         reject(err);
                     }
                     else{
-                        console.log("Success");
                         resolve(res);
                     }
                 });
@@ -64,13 +46,11 @@ module.exports = {
         },
         getContact: function(id){
             return new Promise(function(resolve, reject){
-                console.log(id);
                 db.collection("Contacts").find({"_id": ObjectID(id)}).toArray(function(err, res) {
                     if (err){
                         reject(err);
                     }
                     else{
-                        console.log("Success");
                         resolve(res);
                     }
                 });
@@ -78,13 +58,11 @@ module.exports = {
         },
         deleteContact: function (id){
             return new Promise(function(resolve, reject){
-                console.log("versuch 2 "+ id);
                 db.collection("Contacts").deleteOne({"_id": ObjectID(id)}, function(err, res) {
                     if (err){
                         reject(err);
                     }
                     else{
-                        console.log("Success");
                         resolve(1);
                     }
                 });
@@ -93,13 +71,11 @@ module.exports = {
         updateContact: function (id, newData){
             return new Promise(function(resolve, reject){
                 var newValues = { $set: newData };
-                console.log(newValues);
                 db.collection("Contacts").updateOne({"_id": ObjectID(id)}, newValues, function(err, res) {
                     if (err){
                         reject(err);
                     }
                     else{
-                        console.log("Success");
                         resolve(newData);
                     }
                 });
@@ -112,7 +88,6 @@ module.exports = {
                         reject(err);
                     }
                     else{
-                        console.log("Success");
                         resolve(res);
                     }
                 });
@@ -125,37 +100,17 @@ module.exports = {
                         reject(err);
                     }
                     else{
-                        console.log("Success");
                         resolve(res);
                     }
                 });
             });
-        },
-        /**
-        checkCredentials: function(nickname, password){
-            const user = new Promise(function(resolve, reject){
-                db.collection("Users").find({nickname}).toArray(function(err, res) {
-                    if (err){
-                        reject(err);
-                    }
-                    else{
-                        console.log("Success");
-                        resolve(res);
-                    }
-                });
-            });
-            user.then(function(user){
-                res.json(user);
-            }).catch(next);
-        },*/
-        createUser: function(user){
+        }, createUser: function(user){
             return new Promise(function(resolve, reject){
                 db.collection("Users").insertOne(user, function(err, res) {
                     if (err){
                         reject(err);
                     }
                     else{
-                        console.log("Success");
                         resolve(user);
                     }
                 });

@@ -9,12 +9,13 @@ router.get('/:usernickname', function(req, res, next) {
       res.json(contacts);
       }).catch(next);
 });
+/**
 router.get('/', function(req, res, next) {
     db.check().then(function(contacts){
       res.json(contacts);
       }).catch(next);
 });
-
+*/
 router.post('/', function(req, res, next){
     console.log(req.body);
     db.insertOneContact(req.body).then(function(id){
